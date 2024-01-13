@@ -1,0 +1,31 @@
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+const int pirSensor = 12;
+const int buzzer = 12;
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  pinMode(pirSensor, INPUT);
+  pinMode(buzzer, OUTPUT);
+  lcd.setCursor(2,0);
+  lcd.print("Sensor PIR");
+  lcd.setCursor(0,1);
+  lcd.print("symask.blogspot");
+  delay(5000);
+  lcd.clear();
+}
+void loop() {
+  int sensorValue = digitalRead(pirSensor);
+  if (sensorValue == HIGH) {
+    lcd.setCursor(3,0);
+    lcd.print("Ada Orang");
+    digitalWrite(buzzer, HIGH);
+  }else{
+    lcd.setCursor(3,0);
+    lcd.print("Sepi");
+    digitalWrite(buzzer, LOW);
+  }
+}
